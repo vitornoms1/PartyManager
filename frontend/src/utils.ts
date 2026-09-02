@@ -12,7 +12,8 @@ export function formatMesLabel(chave: string): string {
   return `${NOMES_MES[Number(mes) - 1]}/${ano}`;
 }
 
-export const CARD_CLASS = "bg-white dark:bg-gray-800 rounded-lg shadow p-4";
+export const CARD_CLASS =
+  "bg-white dark:bg-gray-800 dark:border dark:border-gray-700 rounded-lg shadow p-4";
 export const INPUT_CLASS =
-  "w-full border rounded px-3 py-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100";
+  "w-full border rounded px-3 py-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-rose-500 dark:focus:ring-rose-400";
 export const LABEL_CLASS = "block text-sm text-gray-600 dark:text-gray-300 mb-1";

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { api, MODO_DEMO, Evento, EventoInput, Plano, PlanoInput, Gasto, GastoInput, Dashboard } from "./api";
+import { api, Evento, EventoInput, Plano, PlanoInput, Gasto, GastoInput, Dashboard } from "./api";
 import { EventoForm } from "./components/EventoForm";
 import { EventoList } from "./components/EventoList";
 import { PlanoForm } from "./components/PlanoForm";
@@ -160,7 +160,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <header className="bg-rose-600 text-white px-4 py-4 shadow flex justify-between items-start">
         <div>
           <h1 className="text-xl font-bold">Salão de Festas</h1>
@@ -172,7 +172,8 @@ function App() {
           <button
             onClick={alternarTema}
             aria-label="Alternar tema"
-            className="text-sm text-rose-100 hover:text-white"
+            title={tema === "dark" ? "Mudar para modo claro" : "Mudar para modo escuro"}
+            className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-base"
           >
             {tema === "dark" ? "☀️" : "🌙"}
           </button>
@@ -181,12 +182,6 @@ function App() {
           </button>
         </div>
       </header>
-
-      {MODO_DEMO && (
-        <div className="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 text-xs text-center py-1 px-2">
-          Modo demonstração — os dados ficam salvos só neste aparelho, para teste
-        </div>
-      )}
 
       <nav className="bg-white dark:bg-gray-800 border-b dark:border-gray-700 flex overflow-x-auto">
         {ABAS.map((a) => (

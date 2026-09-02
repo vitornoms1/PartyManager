@@ -1,23 +1,35 @@
 import axios from "axios";
 import { getToken, limparSessao } from "./auth";
+import { localApi } from "./localApi";
 
-export const api = axios.create({
+export const MODO_DEMO = import.meta.env.VITE_DEMO_MODE === "true";
+
+const apiReal = axios.create({
   baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:3333/api",
 });
 
-api.interceptors.request.use((config) => {
+apiReal.interceptors.request.use((config) => {
   const token = getToken();
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
-api.interceptors.response.use(
+apiReal.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) limparSessao();
     return Promise.reject(error);
   }
 );
+
+interface ApiClient {
+  get<T = any>(url: string): Promise<{ data: T }>;
+  post<T = any>(url: string, body?: any): Promise<{ data: T }>;
+  put<T = any>(url: string, body?: any): Promise<{ data: T }>;
+  delete<T = any>(url: string): Promise<{ data: T }>;
+}
+
+export const api: ApiClient = MODO_DEMO ? (localApi as unknown as ApiClient) : apiReal;
 
 export async function login(email: string, senha: string): Promise<{ token: string; nome: string }> {
   const { data } = await api.post("/auth/login", { email, senha });

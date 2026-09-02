@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { api, Evento, EventoInput, Plano, PlanoInput, Gasto, GastoInput, Dashboard } from "./api";
+import { api, MODO_DEMO, Evento, EventoInput, Plano, PlanoInput, Gasto, GastoInput, Dashboard } from "./api";
 import { EventoForm } from "./components/EventoForm";
 import { EventoList } from "./components/EventoList";
 import { PlanoForm } from "./components/PlanoForm";
@@ -181,6 +181,12 @@ function App() {
           </button>
         </div>
       </header>
+
+      {MODO_DEMO && (
+        <div className="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 text-xs text-center py-1 px-2">
+          Modo demonstração — os dados ficam salvos só neste aparelho, para teste
+        </div>
+      )}
 
       <nav className="bg-white dark:bg-gray-800 border-b dark:border-gray-700 flex overflow-x-auto">
         {ABAS.map((a) => (

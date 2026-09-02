@@ -1,8 +1,28 @@
 import axios from "axios";
+import { getToken, limparSessao } from "./auth";
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:3333/api",
 });
+
+api.interceptors.request.use((config) => {
+  const token = getToken();
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) limparSessao();
+    return Promise.reject(error);
+  }
+);
+
+export async function login(email: string, senha: string): Promise<{ token: string; nome: string }> {
+  const { data } = await api.post("/auth/login", { email, senha });
+  return data;
+}
 
 export type StatusEvento = "ORCAMENTO" | "CONFIRMADO" | "REALIZADO" | "CANCELADO";
 
@@ -14,7 +34,72 @@ export interface Evento {
   data: string;
   status: StatusEvento;
   valor: number;
+  valorSinal: number;
+  sinalPago: boolean;
+  restantePago: boolean;
   observacoes?: string | null;
 }
 
 export type EventoInput = Omit<Evento, "id">;
+
+export interface Plano {
+  id: string;
+  nome: string;
+  descricao?: string | null;
+  preco: number;
+  itens?: string | null;
+  ativo: boolean;
+}
+
+export type PlanoInput = Omit<Plano, "id">;
+
+export type TipoGasto = "FIXO" | "EVENTO";
+
+export interface Gasto {
+  id: string;
+  descricao: string;
+  categoria: string;
+  tipo: TipoGasto;
+  valor: number;
+  data: string;
+  eventoId?: string | null;
+  evento?: { cliente: string; tipoEvento: string } | null;
+}
+
+export type GastoInput = Omit<Gasto, "id" | "evento">;
+
+export interface DashboardMes {
+  mes: string;
+  receita: number;
+  gasto: number;
+  lucro: number;
+}
+
+export interface DashboardFesta {
+  eventoId: string;
+  cliente: string;
+  tipoEvento: string;
+  data: string;
+  receita: number;
+  gastos: number;
+  lucro: number;
+}
+
+export interface DashboardPendencia {
+  eventoId: string;
+  cliente: string;
+  tipoEvento: string;
+  data: string;
+  sinalPago: boolean;
+  restantePago: boolean;
+  valorPendente: number;
+}
+
+export interface Dashboard {
+  receitaTotal: number;
+  gastoTotal: number;
+  lucroTotal: number;
+  meses: DashboardMes[];
+  porFesta: DashboardFesta[];
+  pendencias: DashboardPendencia[];
+}

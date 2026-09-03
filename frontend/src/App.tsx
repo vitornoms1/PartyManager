@@ -11,7 +11,7 @@ import { MonthFilter } from "./components/MonthFilter";
 import { LoginForm } from "./components/LoginForm";
 import { CalendarView } from "./components/CalendarView";
 import { chaveMes } from "./utils";
-import { getToken, getNomeUsuario, limparSessao } from "./auth";
+import { getToken, limparSessao } from "./auth";
 import { aplicarTema, getTemaSalvo } from "./theme";
 
 type Aba = "eventos" | "agenda" | "planos" | "gastos" | "dashboard";
@@ -163,10 +163,7 @@ function App() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <header className="bg-rose-600 text-white px-4 py-4 shadow flex justify-between items-start">
         <div>
-          <h1 className="text-xl font-bold">Salão de Festas</h1>
-          <p className="text-rose-100 text-sm">
-            {getNomeUsuario() ? `Olá, ${getNomeUsuario()}` : "Gestão completa do salão"}
-          </p>
+          <h1 className="text-xl font-bold">Alecrim Casa de Festas</h1>
         </div>
         <div className="flex items-center gap-3">
           <button

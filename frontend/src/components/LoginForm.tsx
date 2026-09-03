@@ -32,7 +32,7 @@ export function LoginForm({ onLogin }: Props) {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center p-4">
       <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 w-full max-w-sm space-y-4">
         <div className="text-center">
-          <h1 className="text-xl font-bold text-rose-600">Salão de Festas</h1>
+          <h1 className="text-xl font-bold text-rose-600">Alecrim Casa de Festas</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">Entre para continuar</p>
         </div>
 

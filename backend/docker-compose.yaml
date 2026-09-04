@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: salao-festas-backend_postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - salao-festas-backend_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: salao_festas
+
+volumes:
+  salao-festas-backend_data:
